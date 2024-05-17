@@ -8,27 +8,9 @@ import (
 )
 
 var (
-	_ json.Marshaler     = (*JSONTime[RFC3339])(nil)
-	_ fmt.Stringer       = (*JSONTime[RFC3339])(nil)
-	_ TimeFormatProvider = (*RFC3339)(nil)
+	_ json.Marshaler = (*JSONTime[RFC3339])(nil)
+	_ fmt.Stringer   = (*JSONTime[RFC3339])(nil)
 )
-
-type JSONTimeRFC3339 JSONTime[RFC3339]
-
-type TimeFormatProviderConstraint interface {
-	~struct{}
-	TimeFormatProvider
-}
-
-type TimeFormatProvider interface {
-	TimeFormat() string
-}
-
-type RFC3339 struct{}
-
-func (RFC3339) TimeFormat() string {
-	return time.RFC3339
-}
 
 type JSONTime[F TimeFormatProviderConstraint] struct {
 	time.Time
